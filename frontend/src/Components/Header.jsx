@@ -17,7 +17,6 @@ function classNames(...classes) {
 }
 
 function Header(props) {
-  const Backend=process.env.BACKEND
   const user =useContext(UserContext).lguser;
   // const {lguser} = useContext(UserContext);
   // const [user, setLuser] = useState(lguser);
@@ -28,7 +27,7 @@ function Header(props) {
 //-----------------LOGOUT--------------------
   const logout = () => {
     axios
-      .get("https://rapidwash.onrender.com/api/users/logout", {
+      .get(`${BACKEND}/api/users/logout`, {
         withCredentials: true,
       })
       .then((res) => {

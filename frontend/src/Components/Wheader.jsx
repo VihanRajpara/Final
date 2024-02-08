@@ -17,7 +17,6 @@ function classNames(...classes) {
 }
 
 function Header(props) {
-  const Backend=process.env.BACKEND
   const location = useLocation();
   const washerman = useContext(UserContext).lguser;
   const navigate = useNavigate();
@@ -25,7 +24,7 @@ function Header(props) {
   //----------------WASHERMAN LOGOUT----------------------------
   const logout = () => {
     axios
-      .get("https://rapidwash.onrender.com/api/washerman/logout", {
+      .get(`${BACKEND}/api/washerman/logout`, {
         withCredentials: true,
       })
       .then((res) => {

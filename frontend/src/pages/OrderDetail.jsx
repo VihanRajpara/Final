@@ -5,9 +5,10 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import { BACKEND } from '../services/helper';
+import QRCode from 'qrcode.react';
 function OrderDetail() {
   const [reff, setreff] = useState();
-  const [qr, setqr] = useState();
+  const [qr, setqr] = useState('');
   const [showSubmit, setShowsubmit] = React.useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -58,15 +59,22 @@ function OrderDetail() {
       } else if (response.data.message === "user already login") {
       }
     });
-    useEffect(() => {
-      console.log(cloth*cost);
-    axios
-    .post("https://upiqr.in/api/qr",{name:wname,vpa:upi,amount})
-    .then((response) => {
-      console.log(response.data, "dash");
-      setqr(response.data);
-    });
-  }, [cloth]);
+  //   useEffect(() => {
+  //     console.log(cloth*cost);
+  //   axios
+  //   .post("https://upiqr.in/api/qr",{name:wname,vpa:upi,amount})
+  //   .then((response) => {
+  //     console.log(response.data, "dash");
+  //     setqr(response.data);
+  //   });
+  // }, [cloth]);
+
+  useEffect(() => {
+    console.log(cloth*cost);
+    const paystring = `upi://pay?pa=${upi}&am=${amount}&cu=INR`;
+    setqr(paystring);
+}, [cloth]);
+
   const checknull=()=>{
     if (
       name === "" ||
@@ -342,7 +350,9 @@ function OrderDetail() {
                         <div>
                         <p>Please pay for confirm Order.</p>
                         
-                        <img className="w-11/12 h-11/12" src={`data:image/svg+xml;utf8,${qr}`} alt="qr" />
+                        {/* <img className="w-11/12 h-11/12" src={`data:image/svg+xml;utf8,${qr}`} alt="qr" /> */}
+                        <QRCode style={{margin:20,height:200,width:200}} value={qr}/>
+                        
                         <label for="city">Transaction No</label>
                         <input
                           type="text"

@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import axios from "axios";
 import Washcard from "../Components/Washcard";
 import { useNavigate,useLocation } from "react-router-dom";
-import Header from "../Components/Header";
 import { useContext } from "react";
 import { UserContext } from "../Context/User";
 import { BACKEND } from '../services/helper';
@@ -48,7 +47,7 @@ function Cdashbord(props) {
       .post(`${BACKEND}/api/washerman/all`, { city: area })
       .then((res) => {
         setUsers(res.data);
-      })
+      })    
       .catch((err) => console.log(err));
 
   }, []);
